@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHRADDHA INSTITUTE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        .navcontainer {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .profile-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .profile-options.show {
+            display: block;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            padding: 8px;
+            width: calc(100% - 16px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #ee9002;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #fa9703;
+        }
+
+        #results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .student-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .student-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .student-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 130px; /* Add margin to ensure the table is below the image */
+        }
+
+        .student-card th, .student-card td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .student-card th {
+            background-color: #faf6f6;
+        }
+
+        .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: 20px;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            
+        }
+
+        .box {
+            flex: 1;
+            min-width: 300px;
+            max-width: 30%;
+           
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .box:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .text {
+            margin: 0;
+        }
+
+        .topic-heading {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .topic {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .logosec {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .searchbar {
+                display: none;
+            }
+
+            .message {
+                display: flex;
+                align-items: center;
+            }
+
+            .navcontainer {
+                position: absolute;
+                top: 0;
+                left: -250px;
+                background-color: #f2f2f2;
+                width: 250px;
+                height: 100vh;
+                overflow-y: auto;
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+
+            .show {
+                left: 0;
+            }
+
+            .nav {
+                padding: 20px;
+            }
+
+            .nav-option {
+                margin-bottom: 10px;
+            }
+
+            .nav-img {
+                width: 20px;
+                margin-right: 10px;
+            }
+
+            .nav-option h3 {
+                font-size: 16px;
+            }
+
+            .main-container {
+                padding-left: 0;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .box-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .box {
+                width: 100%;
+                max-width: 300px;
+                margin-left: 1px;
+            
+            }
+
+            .report-container {
+                width: 100%;
+            }
+
+            .student-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .student-card img {
+                position: relative;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                margin-left: 70%;
+            }
+
+            .student-card table {
+                width: 100%;
+            }
+             /* Table Styles */
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling on small screens */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Responsive Adjustments */
+        @media only screen and (max-width: 768px) {
+            table {
+                font-size: 14px; /* Reduce font size for smaller screens */
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+        
+        }
+    </style>
+</head>
+
+<body>
+    <!-- for header part -->
+    <header>
+        <div class="logosec">
+            <img src="1.png" class="icn menuicn" id="menuicn" alt="menu-icon">
+            <div class="logo">SHRADDHA INSTITUTE</div>
+        </div>
+
+        <div class="message">
+            <img src="3.png" class="icn" alt="">
+            <button class="profile-button" id="profileButton">
+                <img src="4.png" class="dpicn" alt="profile-icon">
+            </button>
+            <div class="profile-options" id="profileOptions">
+                <a href="#">Rename</a>
+                <a href="#">Edit</a>
+                <a href="#">Setting</a>
+                <a href="#">Log Out</a>
+                <!-- Add more options as needed -->
+            </div>
+        </div>
+
+        <div class="rename-profile-card" id="renameProfileCard">
+            <input type="text" placeholder="New Profile Name">
+            <button onclick="renameProfile()">Save</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer" id="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <h3> Dashboard</h3>
+                    </div>
+
+                    <div class="nav-option option6">
+                        <h3> Student <br> Registration</h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <h3>Admission</h3>
+                    </div>
+                    <div class="nav-option logout">
+                        <h3>Level Completion</h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <div class="box-container">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="box box1">
+                        <div class="text">
+                            <h2 class="topic-heading"></h2>
+                            <h1 class="topic" style="color: black;">Total Student</h1>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="box box2">
+                        <div class="text">
+                            <h2 class="topic-heading"></h2>
+                            <h1 class="topic" style="color: black;">Total Faculty</h1>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="Total_Mon.html" style="text-decoration: none; color: inherit;">
+                    <div class="box box3">
+                        <div class="text">
+                            <h2 class="topic-heading"></h2>
+                            <h1 class="topic" style="color: black;">Total Student In Month</h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="report-container" id="reportContainer">
+                <div class="report-header">
+                    <h1 class="recent-Articles">SEARCH STUDENT DATA</h1>
+                </div>
+                <br>
+                <br>
+                <form id="search-form" onsubmit="searchStudent(event)">
+                    <label for="Name">Enter Student Name:</label>
+                    <input type="text" id="Name" name="Name" required>
+                    <button type="submit">Search</button>
+                    <button type="button" id="clearButton" onclick="clearSearch()">Clear</button>
+                </form>
+                <div id="results"></div>
+                
+                <script>
+                    document.getElementById('menuicn').addEventListener('click', function () {
+                        document.getElementById('navcontainer').classList.toggle('show');
+                    });
+
+                    document.getElementById('profileButton').addEventListener('click', function (event) {
+                        event.stopPropagation();
+                        document.getElementById('profileOptions').classList.toggle('show');
+                    });
+
+                    // Close the dropdown menu if the user clicks outside of it
+                    window.addEventListener('click', function (event) {
+                        var profileOptions = document.getElementById('profileOptions');
+                        if (!profileOptions.contains(event.target) && profileOptions.classList.contains('show')) {
+                            profileOptions.classList.remove('show');
+                        }
+
+                        var navcontainer = document.getElementById('navcontainer');
+                        if (!navcontainer.contains(event.target) && navcontainer.classList.contains('show') && !event.target.matches('#menuicn')) {
+                            navcontainer.classList.remove('show');
+                        }
+                    });
+                </script>
+
+                <script>
+                    // Sample student data
+                    const students = [
+                        { name: 'Bob Johnson', address: '123 Elm St', contact_number: '555-1234', registration_date: '2024-01-15', photo: 'student1.jpeg' },
+                        { name: 'Hasan Johnson', address: '456 Oak St', contact_number: '555-5678', registration_date: '2024-02-20', photo: 'student1.jpeg' },
+                        { name: 'Alice Johnson', address: '789 Pine St', contact_number: '555-8765', registration_date: '2024-03-10', photo: 'student1.jpeg' },
+                        { name: 'Bob Johnson', address: '123 Elm St', contact_number: '555-1234', registration_date: '2024-01-15', photo: 'student1.jpeg' },
+                        { name: 'Hasan Johnson', address: '456 Oak St', contact_number: '555-5678', registration_date: '2024-02-20', photo: 'student1.jpeg' },
+                        { name: 'Alice Johnson', address: '789 Pine St', contact_number: '555-8765', registration_date: '2024-03-10', photo: 'student1.jpeg' },
+                        { name: 'Bob Johnson', address: '123 Elm St', contact_number: '555-1234', registration_date: '2024-01-15', photo: 'student1.jpeg' },
+                        { name: 'Hasan Johnson', address: '456 Oak St', contact_number: '555-5678', registration_date: '2024-02-20', photo: 'student1.jpeg' },
+                        { name: 'Alice Johnson', address: '789 Pine St', contact_number: '555-8765', registration_date: '2024-03-10', photo: 'student1.jpeg' }
+                    ];
+
+                    // Function to display all students
+                    function displayAllStudents() {
+                        const resultsDiv = document.getElementById('results');
+                        resultsDiv.innerHTML = '';
+                        students.forEach(student => {
+                            const card = createStudentCard(student);
+                            resultsDiv.appendChild(card);
+                        });
+                    }
+
+                    // Function to create a student card
+                    function createStudentCard(student) {
+                        const card = document.createElement('div');
+                        card.className = 'student-card';
+
+                        const img = document.createElement('img');
+                        img.src = student.photo;
+                        img.alt = student.name;
+
+                        const table = document.createElement('table');
+                        const tbody = document.createElement('tbody');
+
+                        const row1 = document.createElement('tr');
+                        const cell1_1 = document.createElement('th');
+                        cell1_1.textContent = 'Name';
+                        const cell1_2 = document.createElement('td');
+                        cell1_2.textContent = student.name;
+                        row1.appendChild(cell1_1);
+                        row1.appendChild(cell1_2);
+
+                        const row2 = document.createElement('tr');
+                        const cell2_1 = document.createElement('th');
+                        cell2_1.textContent = 'Contact Number';
+                        const cell2_2 = document.createElement('td');
+                        cell2_2.textContent = student.contact_number;
+                        row2.appendChild(cell2_1);
+                        row2.appendChild(cell2_2);
+
+                        const row3 = document.createElement('tr');
+                        const cell3_1 = document.createElement('th');
+                        cell3_1.textContent = 'Address';
+                        const cell3_2 = document.createElement('td');
+                        cell3_2.textContent = student.address;
+                        row3.appendChild(cell3_1);
+                        row3.appendChild(cell3_2);
+
+                        tbody.appendChild(row1);
+                        tbody.appendChild(row2);
+                        tbody.appendChild(row3);
+                        table.appendChild(tbody);
+
+                        card.appendChild(img);
+                        card.appendChild(table);
+
+                        return card;
+                    }
+
+                    // Function to search for a student by name
+                    function searchStudent(event) {
+                        event.preventDefault();
+                        const Name = document.getElementById('Name').value.trim().toLowerCase();
+                        const filteredStudents = students.filter(student => student.name.toLowerCase().includes(Name));
+                        displaySearchResults(filteredStudents);
+                    }
+
+                    // Function to display search results
+                    function displaySearchResults(students) {
+                        const resultsDiv = document.getElementById('results');
+                        resultsDiv.innerHTML = '';
+
+                        if (students.length === 0) {
+                            resultsDiv.innerHTML = '<p>No students found.</p>';
+                            return;
+                        }
+
+                        students.forEach(student => {
+                            const card = createStudentCard(student);
+                            resultsDiv.appendChild(card);
+                        });
+                    }
+
+                    // Function to clear search results
+                    function clearSearch() {
+                        document.getElementById('Name').value = '';
+                        displayAllStudents();
+                    }
+
+                    // Display all students by default
+                    displayAllStudents();
+                </script>
+                
+            </div>
+            
+                <style>
+                    /* Styles for existing elements and components */
+                    /* ... */
+                    
+                    /* Basic table styling */
+                    .table-container {
+                        width: 100%;
+                        margin: 20px auto;
+                        overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+                        padding-right: 20px;
+                    }
+            
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                        background-color: #f6f4ef;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    }
+            
+                    th, td {
+                        padding: 12px;
+                        text-align: left;
+                        border-bottom: 1px solid #ddd;
+                    }
+            
+                    th {
+                        background-color: #f2f2f2;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                    }
+            
+                    tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+            
+                    tr:hover {
+                        background-color: #ddd;
+                    }
+            
+                    /* Responsive adjustments */
+                    @media only screen and (max-width: 768px) {
+                        table {
+                            font-size: 14px; /* Adjust font size for smaller screens */
+                        }
+            
+                        th, td {
+                            padding: 10px;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                 
+            
+                 
+            
+                    <div class="main">
+                        <!-- Box containers and other content as per your existing code -->
+                        <!-- ... -->
+            
+                        <!-- Table container -->
+                        <div class="table-container">
+                            <h1>STUDENT ADMISSION</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>City</th>
+                                        <th>Country</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>30</td>
+                                        <td>New York</td>
+                                        <td>USA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jane Smith</td>
+                                        <td>25</td>
+                                        <td>Los Angeles</td>
+                                        <td>USA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Michael Johnson</td>
+                                        <td>35</td>
+                                        <td>Chicago</td>
+                                        <td>USA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Emily Davis</td>
+                                        <td>28</td>
+                                        <td>San Francisco</td>
+                                        <td>USA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
+            
+                <!-- JavaScript and other scripts as needed -->
+                <!-- ... -->
+            
+            </body>
+            </html>
+            
+   
+        </div>
+        
+    </div>
+    
+</body>
+</html>

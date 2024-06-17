@@ -1,0 +1,259 @@
+/* Responsive CSS Here */
+@media screen and (max-width: 950px) {
+    .nav-img {
+      height: 25px;
+    }
+    .nav-option {
+      gap: 30px;
+    }
+    .nav-option h3 {
+      font-size: 15px;
+    }
+    .report-topic-heading,
+    .item1,
+    .items {
+      width: 800px;
+    }
+    .box {
+      width: calc(20% - 10px);
+      margin-bottom: 20px;
+      /* Increase the width of the box */
+      width: calc(10% - 20px);
+      /* Increase the height of the box */
+      height: 200px;
+      /* Add padding and adjust text size */
+      padding: 20px;
+    }
+    
+    /* Adjust the text size */
+    .topic {
+      font-size: 24px;
+    }
+    
+  }
+  
+  @media screen and (max-width: 850px) {
+    .nav-img {
+      height: 30px;
+    }
+    .nav-option {
+      gap: 30px;
+    }
+    .nav-option h3 {
+      font-size: 20px;
+    }
+    .report-topic-heading,
+    .item1,
+    .items {
+      width: 700px;
+    }
+    .navcontainer {
+      width: 100vw;
+      position: absolute;
+      transition: all 0.6s ease-in-out;
+      top: 0;
+      left: -100vw;
+    }
+    .nav {
+      width: 100%;
+      position: absolute;
+    }
+    .navclose {
+      left: 00px;
+    }
+    .searchbar {
+      display: none;
+    }
+    .main {
+      padding: 40px 30px 30px 30px;
+    }
+    .box {
+      width: calc(20% - 10px);
+      margin-bottom: 20px;
+      /* Increase the width of the box */
+      width: calc(10% - 20px);
+      /* Increase the height of the box */
+      height: 200px;
+      /* Add padding and adjust text size */
+      padding: 20px;
+    }
+    
+    /* Adjust the text size */
+    .topic {
+      font-size: 24px;
+    }
+    
+  }
+  
+  @media screen and (max-width: 490px) {
+    .message {
+      display: none;
+    }
+    .logosec {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 20px;
+    }
+    .menuicn {
+      height: 25px;
+    }
+    .nav-img {
+      height: 25px;
+    }
+    .nav-option {
+      gap: 25px;
+    }
+    .nav-option h3 {
+      font-size: 12px;
+    }
+    .nav-upper-options {
+      gap: 15px;
+    }
+    .recent-Articles {
+      font-size: 20px;
+    }
+    .report-topic-heading,
+    .item1,
+    .items {
+      width: 550px;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .recent-Articles {
+      font-size: 17px;
+    }
+    .view {
+      width: 60px;
+      font-size: 10px;
+      height: 27px;
+    }
+    .report-header {
+      height: 60px;
+      padding: 10px 10px 5px 10px;
+    }
+    .searchbtn img {
+      height: 20px;
+    }
+    .box {
+      width: calc(20% - 10px);
+      margin-bottom: 20px;
+      /* Increase the width of the box */
+      width: calc(10% - 20px);
+      /* Increase the height of the box */
+      height: 200px;
+      /* Add padding and adjust text size */
+      padding: 20px;
+    }
+    
+    /* Adjust the text size */
+    .topic {
+      font-size: 24px;
+    }
+    
+  }
+  
+  @media screen and (max-width: 320px) {
+     
+    .recent-Articles {
+      font-size: 12px;
+    }
+    .view {
+      width: 50px;
+      font-size: 8px;
+      height: 27px;
+    }
+    .report-header {
+      height: 60px;
+      padding: 10px 5px 5px 5px;
+    }
+    .t-op {
+      font-size: 12px;
+    }
+    .t-op-nextlvl {
+      font-size: 10px;
+    }
+    .report-topic-heading,
+    .item1,
+    .items {
+      width: 300px;
+    }
+    .report-body {
+      padding: 10px;
+    }
+    .label-tag {
+      width: 70px;
+    }
+    .searchbtn {
+      width: 40px;
+    }
+    .searchbar2 input {
+      width: 180px;
+    }
+    .box {
+      width: calc(20% - 10px);
+      margin-bottom: 20px;
+      /* Increase the width of the box */
+      width: calc(10% - 20px);
+      /* Increase the height of the box */
+      height: 200px;
+      /* Add padding and adjust text size */
+      padding: 20px;
+    }
+    
+    /* Adjust the text size */
+    .topic {
+      font-size: 24px;
+    }
+    
+    
+  }
+  .box {
+    width: calc(20% - 10px);
+    margin-bottom: 20px;
+    /* Increase the width of the box */
+    width: calc(10% - 20px);
+    /* Increase the height of the box */
+    height: 200px;
+    /* Add padding and adjust text size */
+    padding: 20px;
+  }
+  
+  /* Adjust the text size */
+  .topic {
+    font-size: 24px;
+  }
+  
+  
+  /* Media query for phones */
+  @media (max-width: 550px) {
+    .box {
+      width: calc(1000px - 10px); /* Full width for phones */
+      height: 300px; /* Smaller height for phones */
+      padding: 170px; /* Less padding for phones */
+      
+    }
+    .box {
+      width: calc(20% - 10px);
+      margin-bottom: 20px;
+      /* Increase the width of the box */
+      width: calc(10% - 20px);
+      /* Increase the height of the box */
+      height: 200px;
+      /* Add padding and adjust text size */
+      padding: 20px;
+    }
+    
+    /* Adjust the text size */
+    .topic {
+      font-size: 24px;
+    }
+    
+    .topic {
+      font-size: 20px; /* Smaller text size for phones */
+    }
+  }
+  
+  

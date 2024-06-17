@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHRADDHA INSTITUTE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        /* Your existing CSS styles go here */
+
+        /* Ensure the profile options are displayed properly */
+        .navcontainer {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+        .profile-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        select {
+            padding: 8px;
+            width: calc(100% - 16px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+    width: 100%; /* Make select take full width */
+    max-width: 100%; /* Ensure it doesn't overflow the container */
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #ee8003;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .profile-options.show {
+            display: block;
+        }
+
+        /* Additional styles for the report container and student card */
+        .report-container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .student-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .student-photo {
+            width: 100px; /* Adjust size as needed */
+            margin-bottom: 10px; /* Provide spacing between photo and table */
+        }
+
+        /* Responsive adjustments */
+        @media only screen and (max-width: 768px) {
+            /* Adjustments for smaller screens */
+            .student-card {
+                padding: 10px;
+            }
+        .student-card img {
+        position: relative;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 120%;
+    }
+        }
+        .student-photo-container {
+            margin-right: 5px; /* Provide space between photo and table */
+            flex-grow: 0; /* Prevent the container from growing */
+        }
+        .student-card {
+            display: flex;
+            align-items: center; /* Align items vertically centered */
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .student-photo-circle {
+            width: 130px; /* Adjust size as needed */
+            height: 130px; /* Adjust size as needed */
+            border-radius: 90%; /* Circular shape */
+            object-fit: cover; /* Ensure entire image is visible */
+            
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+           
+        }
+        
+        .student-photo-container {
+            flex-shrink: 0; /* Prevent photo from growing in size */
+            margin-right: 20px; /* Provide space between photo and table */
+        }
+        .navcontainer {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .profile-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .profile-options.show {
+            display: block;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            padding: 8px;
+            width: calc(100% - 16px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #faa301;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #fda41e;
+        }
+
+        #results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .student-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .student-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .student-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 130px; /* Add margin to ensure the table is below the image */
+        }
+
+        .student-card th, .student-card td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .student-card th {
+            background-color: #faf6f6;
+        }
+
+        @media only screen and (max-width: 768px) {
+            select {
+        width: 100%; /* Ensure select takes full width */
+    }
+
+    button {
+        width: 100%; /* Ensure button takes full width */
+        margin-top: 10px; /* Add margin for spacing */
+    }
+            .logosec {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .searchbar {
+                display: none;
+            }
+
+            .message {
+                display: flex;
+                align-items: center;
+            }
+
+            .navcontainer {
+                position: absolute;
+                top: 0;
+                left: -250px;
+                background-color: #f2f2f2;
+                width: 250px;
+                height: 100vh;
+                overflow-y: auto;
+                transition: all 0.3s ease;
+                z-index: 1000;
+            }
+
+            .show {
+                left: 0;
+            }
+
+            .nav {
+                padding: 20px;
+            }
+
+            .nav-option {
+                margin-bottom: 10px;
+            }
+
+            .nav-img {
+                width: 20px;
+                margin-right: 10px;
+            }
+
+            .nav-option h3 {
+                font-size: 16px;
+            }
+
+            .main-container {
+                padding-left: 0;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .box-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .box {
+                width: calc(50% - 10px);
+                margin-bottom: 20px;
+            }
+
+            .report-container {
+                width: 100%;
+            }
+
+            .student-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .student-card img {
+                position: relative;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                margin-left: 200%;
+            }
+
+            .student-card table {
+                width: 100%;
+            }
+
+        /* Select box adjustments */
+        select {
+            width: 100%; /* Make select take full width */
+            max-width: 50%; /* Ensure it doesn't overflow the container */
+            max-height: fit-content;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        }
+      
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logosec">
+            <img src="1.png" class="icn menuicn" id="menuicn" alt="menu-icon">
+            <div class="logo">SHRADDHA INSTITUTE</div>
+        </div>
+
+        <div class="message">
+            <img src="3.png" class="icn" alt="">
+            <button class="profile-button" id="profileButton">
+                <img src="4.png" class="dpicn" alt="profile-icon">
+            </button>
+            <div class="profile-options" id="profileOptions">
+                <a href="#">Rename </a>
+                <a href="#">Edit </a>
+                <a href="#">Setting </a>
+                <a href="#">Log Out </a>
+                <!-- Add more options as needed -->
+            </div>
+        </div>
+
+        <div class="rename-profile-card" id="renameProfileCard">
+            <input type="text" placeholder="New Profile Name">
+            <button onclick="renameProfile()">Save</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer" id="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <!-- <img src="5.png" class="nav-img" alt="dashboard"> -->
+                        <h3> Dashboard</h3>
+                    </div>
+
+                    <div class="nav-option option6">
+                        <h3>Student <br>Registration</h3>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <h3>Admission</h3>
+                    </div>
+                    <div class="nav-option logout">
+                        <h3>Level Completion</h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <div class="searchbar2">
+                <input type="text" name="" id="searchInput" placeholder="Search">
+                <div class="searchbtn">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png" class="icn srchicn" alt="search-button">
+                </div>
+            </div>
+
+            <div class="report-container" id="reportContainer">
+                <div class="report-header">
+                    <h1 class="recent-Articles">SEARCH STUDENT DATA</h1>
+                </div>
+                <br>
+                <br>
+                <form id="search-form">
+                  
+                    <span></span>
+                    <select id="monthList" onchange="displaySelectedMonth()">
+                        <option value="" selected disabled>Select a month:</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <button type="button" onclick="clearSelection()">Clear</button>
+                </form>
+
+                <div id="results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+   
+        document.getElementById('menuicn').addEventListener('click', function () {
+            document.getElementById('navcontainer').classList.toggle('show');
+        });
+
+        document.getElementById('profileButton').addEventListener('click', function (event) {
+            event.stopPropagation();
+            document.getElementById('profileOptions').classList.toggle('show');
+        });
+
+        // Close the dropdown menu if the user clicks outside of it
+        window.addEventListener('click', function (event) {
+            var profileOptions = document.getElementById('profileOptions');
+            if (!profileOptions.contains(event.target) && profileOptions.classList.contains('show')) {
+                profileOptions.classList.remove('show');
+            }
+
+            var navcontainer = document.getElementById('navcontainer');
+            if (!navcontainer.contains(event.target) && navcontainer.classList.contains('show') && !event.target.matches('#menuicn')) {
+                navcontainer.classList.remove('show');
+            }
+        });
+
+
+        // Sample student data
+        const students = [
+            { name: 'Alice Johnson', address: '123 Elm St', contact_number: '555-1234', registration_date: '2024-01-15', photo: 'student1.jpeg' },
+            { name: 'Jonh Johnson', address: '456 Oak St', contact_number: '555-5678', registration_date: '2024-02-20', photo: 'student1.jpeg' },
+            { name: 'Alice Johnson', address: '789 Pine St', contact_number: '555-9876', registration_date: '2024-03-25', photo: 'student1.jpeg' },
+            { name: 'Jonh Johnson', address: '789 Pine St', contact_number: '555-9876', registration_date: '2024-03-25', photo: 'student1.jpeg' }
+        ];
+
+        function displaySelectedMonth() {
+            const month = document.getElementById('monthList').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            const filteredStudents = students.filter(student => student.registration_date.split('-')[1] === month);
+
+            if (filteredStudents.length > 0) {
+                filteredStudents.forEach(student => {
+                    const card = createStudentCard(student);
+                    resultsDiv.appendChild(card);
+                });
+            } else {
+                resultsDiv.textContent = 'No students found for the selected month.';
+            }
+        }
+
+        function clearSelection() {
+            document.getElementById('monthList').selectedIndex = 0;
+            document.getElementById('results').innerHTML = '';
+        }
+
+        function createStudentCard(student) {
+            const card = document.createElement('div');
+            card.className = 'student-card';
+
+            const img = document.createElement('img');
+            img.src = student.photo;
+            img.alt = student.name;
+            img.className = 'student-photo';
+
+            const table = document.createElement('table');
+            const tbody = document.createElement('tbody');
+
+            // Populate table rows for student data
+            const rows = [
+                { label: 'Name', value: student.name },
+                { label: 'Contact Number', value: student.contact_number },
+                { label: 'Address', value: student.address },
+                { label: 'Registration Date', value: student.registration_date }
+            ];
+
+            rows.forEach(rowData => {
+                const row = document.createElement('tr');
+                const labelCell = document.createElement('th');
+                labelCell.textContent = rowData.label;
+                const valueCell = document.createElement('td');
+                valueCell.textContent = rowData.value;
+                row.appendChild(labelCell);
+                row.appendChild (valueCell);
+                row.appendChild(valueCell);
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            card.appendChild(img); // Add the image at the top
+            card.appendChild(table); // Add the table after the image
+
+            return card;
+        }
+    </script>
+    <script>
+    // Function to create a student card
+    function createStudentCard(student) {
+        const card = document.createElement('div');
+        card.className = 'student-card';
+
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        // Populate table rows for student data
+        const rows = [
+            { label: 'Name', value: student.name },
+            { label: 'Contact Number', value: student.contact_number },
+            { label: 'Address', value: student.address },
+            { label: 'Registration Date', value: student.registration_date }
+        ];
+
+        rows.forEach(rowData => {
+            const row = document.createElement('tr');
+            const labelCell = document.createElement('th');
+            labelCell.textContent = rowData.label;
+            const valueCell = document.createElement('td');
+            valueCell.textContent = rowData.value;
+            row.appendChild(labelCell);
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+
+        // Create a container for the student photo
+        const photoContainer = document.createElement('div');
+        photoContainer.className = 'student-photo-container';
+
+        // Create the circular photo element
+        const img = document.createElement('img');
+        img.src = student.photo;
+        img.alt = student.name;
+        img.className = 'student-photo-circle'; // Apply styling for circular shape
+
+        photoContainer.appendChild(img);
+        card.appendChild(photoContainer);
+        card.appendChild(table);
+
+        return card;
+    }
+</script>
+<script>
+    // Function to create a student card
+    function createStudentCard(student) {
+        const card = document.createElement('div');
+        card.className = 'student-card';
+
+        // Create a container for the student photo
+        const photoContainer = document.createElement('div');
+        photoContainer.className = 'student-photo-container';
+
+        // Create the circular photo element
+        const img = document.createElement('img');
+        img.src = student.photo;
+        img.alt = student.name;
+        img.className = 'student-photo-circle'; // Apply styling for circular shape
+
+        photoContainer.appendChild(img);
+
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        // Populate table rows for student data
+        const rows = [
+            { label: 'Name', value: student.name },
+            { label: 'Contact Number', value: student.contact_number },
+            { label: 'Address', value: student.address },
+            { label: 'Registration Date', value: student.registration_date }
+        ];
+
+        rows.forEach(rowData => {
+            const row = document.createElement('tr');
+            const labelCell = document.createElement('th');
+            labelCell.textContent = rowData.label;
+            const valueCell = document.createElement('td');
+            valueCell.textContent = rowData.value;
+            row.appendChild(labelCell);
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+
+        card.appendChild(photoContainer);
+        card.appendChild(table);
+
+        return card;
+    }
+</script>
+
+</body>
+</html>
+
