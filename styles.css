@@ -1,0 +1,265 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f3e5cd;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+h2 {
+    text-align: center;
+    color: #eebc4f;
+}
+
+.panel {
+    display: none;
+}
+
+.panel.active {
+    display: block;
+}
+
+.panel.large {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #eebc4f;
+    margin-bottom: 10px;
+}
+
+label {
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input::placeholder {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #eebc4f;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button:hover {
+    background-color: #d4a43e;
+}
+
+button i {
+    font-size: 1rem;
+}
+
+.close-btn-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.close-btn-top:hover {
+    color: red;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+th, td {
+    padding: 10px;
+}
+
+.small-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.small-btn:hover {
+    background-color: #218838;
+}
+
+.remove-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #c82333;
+}
+/* Increase Panel Width and Center */
+#panel-4 {
+    width: 180%; /* Increase the width of the panel as needed */
+    /* max-width: 1200px; Optional: Set a maximum width for larger screens */
+    margin: 0 auto; /* Center the panel */
+    padding: 20px; /* Add some padding inside the panel */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+/* Center the Table within the Panel */
+#order-table {
+    width: 50%; /* Make the table take up the full width of the panel */
+    margin-left: 5%; /* Center the table */
+    border-collapse: collapse; /* Optional: Collapses table borders */
+}
+
+/* Table Headers */
+#order-table th {
+    font-size: 14px; /* Decrease the font size of headers */
+    padding: 10px;
+    text-align: left; /* Optional: Align text to the left */
+}
+
+/* Table Data Cells */
+#order-table td {
+    font-size: 14px; /* Keep row data readable */
+    padding: 10px;
+}
+
+/* Increase Input Box Size */
+#order-table input[type="text"],
+#order-table input[type="number"] {
+    width: 130px; /* Increase the width of input fields */
+    padding: 8px;
+    font-size: 14px;
+    box-sizing: border-box; /* Ensures padding doesn't overflow */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Add New Button Style */
+.small-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.small-btn i {
+    font-size: 1rem;
+    margin-right: 5px;
+}
+/* Review Summary Panel */
+#panel-6 {
+    width: 90%; /* Adjust width as needed */
+    max-width: 1200px; /* Optional: Set a maximum width */
+    margin: 20px auto; /* Center the panel */
+    padding: 20px; /* Add padding */
+    box-sizing: border-box; /* Include padding in width */
+    border: 1px solid #ddd; /* Border around the panel */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background */
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 15px; /* Space between form fields */
+}
+
+/* Labels */
+.form-group h4 {
+    margin-top: 20px; /* Space above each section */
+    margin-bottom: 10px; /* Space below each section title */
+}
+
+/* Summary Table */
+#summary-order-table {
+    width: 100%; /* Full width of the parent container */
+    border-collapse: collapse; /* Collapse table borders */
+}
+
+#summary-order-table th,
+#summary-order-table td {
+    border: 1px solid #ddd; /* Border around table cells */
+    padding: 8px; /* Padding inside cells */
+    text-align: left; /* Align text to the left */
+}
+
+#summary-order-table th {
+    background-color: #f4f4f4; /* Light background for headers */
+}
+
+/* Action Buttons */
+.edit-btn,
+.submit-btn {
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px; /* Space between buttons */
+}
+
+.edit-btn:hover,
+.submit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-step Form with Dynamic Table</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            text-align: center;
+        }
+
+        .panel {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.close-btn-top {
+            background-color: transparent;
+            color: #ff0000;
+            float: right;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .responsive-table {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        #order-table,
+        #summary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #order-table th,
+        #order-table td,
+        #summary-table th,
+        #summary-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .export-buttons {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .panel {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .buttons button {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .buttons {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Order Form</h2>
+        
+        <button class="close-btn-top" onclick="closeForm()">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="panel active" id="panel-1">
+            <h3>Teacher Details</h3>
+            <div class="form-group">
+                <label for="mobile">Mobile Number *</label>
+                <input type="tel" id="mobile" placeholder="Enter your mobile number">
+            </div>
+            <div class="form-group">
+                <label for="alt-number">Alternate Number</label>
+                <input type="tel" id="alt-number" placeholder="Enter your alternate number">
+            </div>
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="franchise">Franchise Code *</label>
+                <input type="text" id="franchise" placeholder="Enter your franchise code">
+            </div>
+        </div>
+
+        <div class="panel" id="panel-2">
+            <h3>Billing Address</h3>
+            <div class="form-group">
+                <label for="billing">Billing Address *</label>
+                <input type="text" id="billing" placeholder="Building, Street, and Locality">
+            </div>
+            <div class="form-group">
+                <input type="text" id="city" placeholder="City">
+            </div>
+            <div class="form-group">
+                <input type="text" id="state" placeholder="State/Province">
+            </div>
+            <div class="form-group">
+                <input type="text" id="postal_code" placeholder="Postal Code">
+            </div>
+            <div class="form-group">
+                <input type="text" id="country" placeholder="Country">
+            </div>
+        </div>
+
+        <div class="panel" id="panel-3">
+            <h3>Shipping Address</h3>
+            <div class="form-group">
+                <label for="shipping">Shipping Address</label>
+                <input type="text" id="shipping" placeholder="Building, Street, and Locality">
+            </div>
+            <div class="form-group">
+                <input type="text" id="city1" placeholder="City">
+            </div>
+            <div class="form-group">
+                <input type="text" id="state1" placeholder="State/Province">
+            </div>
+            <div class="form-group">
+                <input type="text" id="postal_code1" placeholder="Postal Code">
+            </div>
+            <div class="form-group">
+                <input type="text" id="country1" placeholder="Country">
+            </div>
+        </div>
+
+        <section class="panel large" id="panel-4" aria-labelledby="order-details">
+            <h3 id="order-details">Order Details</h3>
+            <button id="add-new-btn" class="small-btn" onclick="addNewRow()" style="margin-bottom: 1em;">
+                <i class="fas fa-plus"></i> Add New
+            </button>
+            <div class="responsive-table">
+                <table id="order-table">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Select Book</th>
+                            <th>Book Code</th>
+                            <th>Book Price</th>
+                            <th>Book Weight</th>
+                            <th>Quantity</th>
+                            <th>Subtotal Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row data will be appended here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="panel" id="panel-5">
+            <h3>Order Summary</h3>
+            <form id="order-summary-form">
+                <div class="form-group">
+                    <label for="order-id">Order ID *</label>
+                    <input type="text" id="order-id" name="order-id" placeholder="Enter your order ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="shipping-method">Shipping Method *</label>
+                    <select id="shipping-method" name="shipping-method" required>
+                        <option value="standard">Standard Shipping</option>
+                        <option value="express">Express Shipping</option>
+                        <option value="overnight">Overnight Shipping</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="packaging-charges">Packaging Charges *</label>
+                    <input type="number" id="packaging-charges" name="packaging-charges" step="0.01" placeholder="Enter packaging charges" required>
+                </div>
+                <div class="form-group">
+                    <label for="shipment-weight">Total Shipment Weight (in kg) *</label>
+                    <input type="number" id="shipment-weight" name="shipment-weight" step="0.01" placeholder="Enter total shipment weight" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-date">Date *</label>
+                    <input type="date" id="order-date" name="order-date" required>
+                </div>
+                <div class="form-group">
+                    <label>Payment Mode *</label>
+                    <div class="payment-mode">
+                        <label>
+                            <input type="radio" id="payment-online" name="payment-mode" value="online" required>
+                            Online
+                        </label>
+                    </div>
+                    <div class="payment-mode">
+                        <label>
+                            <input type="radio" id="payment-cash" name="payment-mode" value="cash">
+                            By Cash
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="total-price">Total Price *</label>
+                    <input type="number" id="total-price" name="total-price" step="0.01" placeholder="Enter total price" required>
+                </div>
+                <button type="button" onclick="goNext()">Submit</button>
+            </form>
+        </div>
+
+        <div class="panel" id="panel-6">
+            <h2>SHRADDHA INSTITUTE</h2>
+            <div id="summary" class="summary-section"></div>
+            <h3>Order Details</h3>
+            <div class="responsive-table">
+                <table id="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Sr No</th>
+                            <th>Select Book</th>
+                            <th>Book Code</th>
+                            <th>Book Price</th>
+                            <th>Book Weight</th>
+                            <th>Quantity</th>
+                            <th>Subtotal Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-summary-body">
+                        <!-- Order summary data will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="export-buttons">
+                <button onclick="exportToPDF()">Export to PDF</button>
+                <button onclick="exportToExcel()">Export to Excel</button>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button id="next-btn" onclick="goNext()">
+                <i class="fas fa-arrow-right"></i> Next
+            </button>
+        </div>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js"></script>
+    <script>
+        function goNext() {
+            const currentPanel = document.querySelector('.panel.active');
+            const nextPanel = currentPanel.nextElementSibling;
+
+            if (nextPanel && nextPanel.classList.contains('panel')) {
+                currentPanel.classList.remove('active');
+                nextPanel.classList.add('active');
+
+                if (nextPanel.id === "panel-6") {
+                    displaySummary();
+                }
+            }
+        }
+
+        function goBack() {
+            const currentPanel = document.querySelector('.panel.active');
+            const previousPanel = currentPanel.previousElementSibling;
+
+            if (previousPanel && previousPanel.classList.contains('panel')) {
+                currentPanel.classList.remove('active');
+                previousPanel.classList.add('active');
+            }
+        }
+
+        function addNewRow() {
+            const tableBody = document.querySelector('#order-table tbody');
+            const rowCount = tableBody.rows.length;
+            const newRow = tableBody.insertRow(rowCount);
+
+            newRow.innerHTML = `
+                <td>${rowCount + 1}</td>
+                <td><input type="text" placeholder="Book Title" /></td>
+                <td><input type="text" placeholder="Book Code" /></td>
+                <td><input type="number" placeholder="Book Price" oninput="updateSubtotal(this)" /></td>
+                <td><input type="number" placeholder="Book Weight" /></td>
+                <td><input type="number" placeholder="Quantity" oninput="updateSubtotal(this)" /></td>
+                <td><input type="number" placeholder="Subtotal Price" readonly /></td>
+            `;
+        }
+
+        function updateSubtotal(input) {
+            const row = input.closest('tr');
+            const price = parseFloat(row.cells[3].querySelector('input').value) || 0;
+            const quantity = parseFloat(row.cells[5].querySelector('input').value) || 0;
+            const subtotal = price * quantity;
+
+            row.cells[6].querySelector('input').value = subtotal.toFixed(2);
+        }
+
+        function displaySummary() {
+            const summaryDiv = document.getElementById('summary');
+            summaryDiv.innerHTML = '';
+
+            const teacherDetails = `
+                <h3>Teacher Details</h3>
+                <p>Mobile: ${document.getElementById('mobile').value}</p>
+                <p>Alternate Number: ${document.getElementById('alt-number').value}</p>
+                <p>Name: ${document.getElementById('name').value}</p>
+                <p>Franchise Code: ${document.getElementById('franchise').value}</p>
+            `;
+
+            const billingAddress = `
+                <h3>Billing Address</h3>
+                <p>${document.getElementById('billing').value}</p>
+                <p>${document.getElementById('city').value}</p>
+                <p>${document.getElementById('state').value}</p>
+                <p>${document.getElementById('postal_code').value}</p>
+                <p>${document.getElementById('country').value}</p>
+            `;
+
+            const shippingAddress = `
+                <h3>Shipping Address</h3>
+                <p>${document.getElementById('shipping').value}</p>
+                <p>${document.getElementById('city1').value}</p>
+                <p>${document.getElementById('state1').value}</p>
+                <p>${document.getElementById('postal_code1').value}</p>
+                <p>${document.getElementById('country1').value}</p>
+            `;
+
+            summaryDiv.innerHTML += teacherDetails + billingAddress + shippingAddress;
+
+            const orderSummaryBody = document.getElementById('order-summary-body');
+            orderSummaryBody.innerHTML = ''; // Clear previous rows
+            const rows = document.querySelectorAll('#order-table tbody tr');
+
+            if (rows.length === 0) {
+                const newRow = orderSummaryBody.insertRow();
+                const newCell = newRow.insertCell();
+                newCell.colSpan = 7;
+                newCell.textContent = "No order details added.";
+            } else {
+                rows.forEach((row) => {
+                    const cells = row.querySelectorAll('td');
+                    const newRow = orderSummaryBody.insertRow();
+
+                    cells.forEach((cell) => {
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = cell.querySelector('input') ? cell.querySelector('input').value : cell.textContent;
+                    });
+                });
+            }
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+        
+            doc.text("SHRADDHA INSTITUTE", 14, 16);
+        
+            // Add teacher details
+            doc.setFontSize(12);
+            doc.text("Teacher Details:", 14, 30);
+            doc.text(`Mobile: ${document.getElementById('mobile').value}`, 14, 36);
+            doc.text(`Alternate Number: ${document.getElementById('alt-number').value}`, 14, 42);
+            doc.text(`Name: ${document.getElementById('name').value}`, 14, 48);
+            doc.text(`Franchise Code: ${document.getElementById('franchise').value}`, 14, 54);
+        
+            // Add billing address
+            doc.text("Billing Address:", 14, 60);
+            doc.text(`${document.getElementById('billing').value}`, 14, 66);
+            doc.text(`${document.getElementById('city').value}`, 14, 72);
+            doc.text(`${document.getElementById('state').value}`, 14, 78);
+            doc.text(`${document.getElementById('postal_code').value}`, 14, 84);
+            doc.text(`${document.getElementById('country').value}`, 14, 90);
+        
+            // Add shipping address
+            doc.text("Shipping Address:", 14, 96);
+            doc.text(`${document.getElementById('shipping').value}`, 14, 102);
+            doc.text(`${document.getElementById('city1').value}`, 14, 108);
+            doc.text(`${document.getElementById('state1').value}`, 14, 114);
+            doc.text(`${document.getElementById('postal_code1').value}`, 14, 120);
+            doc.text(`${document.getElementById('country1').value}`, 14, 126);
+        
+            // Prepare order details for table
+            const orderDetails = Array.from(document.querySelectorAll('#order-summary-body tr')).map(row => {
+                return Array.from(row.children).map(cell => cell.textContent);
+            });
+        
+            // Add table for order details
+            doc.autoTable({
+                head: [['Sr No', 'Select Book', 'Book Code', 'Book Price', 'Book Weight', 'Quantity', 'Subtotal Price']],
+                body: orderDetails,
+                startY: 140,
+            });
+        
+            // Save the PDF
+            doc.save('order-summary.pdf');
+        }
+
+        function exportToExcel() {
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.table_to_sheet(document.getElementById('summary-table'));
+            XLSX.utils.book_append_sheet(wb, ws, "Order Summary");
+            XLSX.writeFile(wb, 'order-summary.xlsx');
+        }
+    </script>
+</body>
+</html>
